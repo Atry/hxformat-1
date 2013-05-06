@@ -62,6 +62,8 @@ enum SWFTag {
 	TJPEGTables( data : haxe.io.Bytes );
 	TBinaryData( id : Int, data : haxe.io.Bytes );
 	TSound( data : Sound );
+	TDefineText( dt : DefineText );
+	TDefineText2( dt : DefineText );
 	TUnknown( id : Int, data : haxe.io.Bytes );
 }
 
@@ -480,12 +482,31 @@ enum SoundRate {
    SR44k; // 44100 Hz
 }
 
-enum FontData {
-	FDFont1(data: Font1Data);
-	FDFont2(hasWideChars: Bool, data: Font2Data);
-	FDFont3(data: Font2Data);
-}
+typedef TextRecord = {
+	var fontId : Null<Int>;
+	var textColor : Null<Fixed>;
+	var xOffset : Null<Int>;
+	var yOffset : Null<Int>;
+	var textHeight : Null<Int>;
+	var glyphEntries : Array<{
+		var glyphIndex : Int;
+		var glyphAdvance : Int;
+	}>;
+};
 
+typedef DefineText = {
+	var cid : Int;
+	var textBounds : {
+		var left : Int;
+		var right : Int;
+		var top : Int;
+		var bottom : Int;
+	};
+	var textMatrix : Matrix;
+	var glyphBits: Int;
+	var advanceBits: Int;
+	var textRecords: Array<TextRecord>;
+};
 enum FontInfoData {
 	FIDFont1(shiftJIS: Bool, isANSI: Bool, hasWideCodes: Bool, data: FIData);
 	FIDFont2(language: LangCode, data: FIData);
