@@ -1076,7 +1076,6 @@ class Reader {
 				var offs = i.readUInt16();
 				offset_table.push(offs - first_glyph_offset);
 			}
-			
 			var code_table_offset = i.readUInt16();
 			shape_data_length = code_table_offset - first_glyph_offset;
 		}
@@ -1255,8 +1254,8 @@ class Reader {
 			readFont(len, 1);
 		case TagId.DefineFont2:
 			readFont(len, 2);
-		case TagId.DefineFont3:
-			readFont(len, 3);
+		//case TagId.DefineFont3:
+			//readFont(len, 3);
 		case TagId.DefineFontInfo:
 			readFontInfo(len, 1);
 		case TagId.DefineFontInfo2:
