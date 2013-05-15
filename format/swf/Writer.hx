@@ -463,9 +463,6 @@ class Writer {
 		if (det.textColor != null) {
 			writeRGBA(det.textColor);
 		}
-		if (det.fontHeight != null) {
-			o.writeUInt16(det.fontHeight);
-		}
 		if (det.maxLength != null) {
 			o.writeUInt16(det.maxLength);
 		}
