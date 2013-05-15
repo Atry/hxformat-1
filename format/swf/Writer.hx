@@ -49,6 +49,11 @@ class Writer {
 		writeEnd();
 	}
 
+	function writeSignedBits( nbits : Int, n : Int ) {
+		bits.writeBit(n < 0);
+		bits.writeBits(nbits - 1, n < 0 ? n + (1 << (nbits - 1)) : n);
+	}
+
 	function writeRect(r) {
 		var lr = (r.left > r.right) ? r.left : r.right;
 		var bt = (r.top > r.bottom) ? r.top : r.bottom;
@@ -59,10 +64,10 @@ class Writer {
 			nbits++;
 		}
 		bits.writeBits(5,nbits);
-		bits.writeBits(nbits,r.left);
-		bits.writeBits(nbits,r.right);
-		bits.writeBits(nbits,r.top);
-		bits.writeBits(nbits,r.bottom);
+		writeSignedBits(nbits,r.left);
+		writeSignedBits(nbits,r.right);
+		writeSignedBits(nbits,r.top);
+		writeSignedBits(nbits,r.bottom);
 		bits.flush();
 	}
 
@@ -412,9 +417,6 @@ class Writer {
 		}
 		if (det.textColor != null) {
 			writeRGBA(det.textColor);
-		}
-		if (det.fontHeight != null) {
-			o.writeUInt16(det.fontHeight);
 		}
 		if (det.maxLength != null) {
 			o.writeUInt16(det.maxLength);

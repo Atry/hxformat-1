@@ -59,14 +59,20 @@ class Reader {
 		return b.getBytes();
 	}
 
+	function readSignedBits( nbits : Int ) {
+		var sign = bits.readBit();
+		var n = bits.readBits(nbits - 1);
+		return sign ? n - (1 << (nbits - 1)) : n;
+	}
+
 	function readRect() {
 		bits.reset();
 		var nbits = bits.readBits(5);
 		return {
-			left : bits.readBits(nbits),
-			right : bits.readBits(nbits),
-			top : bits.readBits(nbits),
-			bottom : bits.readBits(nbits),
+			left : readSignedBits(nbits),
+			right : readSignedBits(nbits),
+			top : readSignedBits(nbits),
+			bottom : readSignedBits(nbits),
 		};
 	}
 
